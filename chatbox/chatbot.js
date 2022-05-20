@@ -1,3 +1,13 @@
+function mode(s){
+    if(s=='Night'){
+      document.querySelector('body').style.backgroundColor='#323232';
+      document.querySelector('body').style.color='white';
+    }else if(s=='Day'){
+      document.querySelector('body').style.backgroundColor='white';
+      document.querySelector('body').style.color='black';
+    }
+}
+
 function appendChat(user, bot){
     console.log('Trying to append')
     console.log(user, bot)
@@ -33,9 +43,9 @@ document.getElementById('chatForm').addEventListener('submit', function(e){
         userInputTag.value = "";
     });
 
-    function menu_selection(s){
+function menu_selection(s){
       user_input = s;
-      if(user_input == '관련 뉴스 조회'){
+      if(user_input == '관련 뉴스 검색'){
         bot_output = '검색 키워드를 입력해 주세요.'
       }else if(user_input == '추가메뉴2'){
         bot_output = '서비스 예정입니다.'
