@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from silverfund import views
 
+app_name = 'silverfund'
+
 urlpatterns = [
-    path('', views.home),
-    path('<id>', views.pages),
+    path('', views.home, name='home'),
+    path('portfolio/', views.portfolio, name='portfolio'),
+    path('chatbot/', views.chatbot, name='chatbot'),
+    path('contacts/', views.contacts, name='contacts')
 ]
