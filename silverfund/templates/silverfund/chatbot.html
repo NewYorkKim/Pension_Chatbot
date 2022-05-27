@@ -20,7 +20,7 @@
     </header>
     <nav>
       <ul>
-        <li><a href="{% url 'silverfund:home' %}">홈</a></li>
+        <li><a href="">홈</a></li>
         <li><a href="{% url 'silverfund:portfolio' %}">포트폴리오</a></li>
         <li><a href="{% url 'silverfund:chatbot' %}">챗봇</a></li>
         <li><a href="{% url 'silverfund:contacts' %}">연락</a></li>
@@ -31,7 +31,7 @@
           <div class="defaultbox">
             <br>
             <div class="dialogbox bot">안녕하세요. 실버펀드 챗봇 서비스에 오신 것을 환영합니다.</div>
-            <div class="dialogbox bot">연금에 대해 궁금한 점이 있으시다면 아래에 입력해주세요. 제가 열심히 답변해 드리겠습니다 :-)</div>
+            <div class="dialogbox bot">연금에 대해 궁금하신 점이 있으시다면 아래에 입력해주세요. 제가 열심히 답변해 드리겠습니다 :-)</div>
             <br><br><br><br><br>
             <div id="menu">
               <button class="btn btn-primary ml-1" onclick="menu_selection('관련 뉴스 검색');">관련 뉴스 검색</button>
@@ -41,7 +41,8 @@
           </div>
         </div>
         <div id="botform">
-          <form action="" id="chatForm" method="POST">
+          <form action="{% url 'silverfund:chatbot' %}" id="chatForm" method="POST">
+            {% csrf_token %}
             <input type="text" class="form-control" style="display: inline;" name="user_query" id="user_query" minlength="2" placeholder="질문을 입력해주세요.">
             <input type="submit" class="btn btn-secondary mb-2" value="전송">
           </form>

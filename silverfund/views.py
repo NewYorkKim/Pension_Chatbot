@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 def home(request):
     return render(request, 'silverfund/home.html')
@@ -7,7 +8,6 @@ def home(request):
 def portfolio(request):
     return render(request, 'silverfund/portfolio.html')
 
-@csrf_exempt
 def chatbot(request):
     return render(request, 'silverfund/chatbot.html')
 
