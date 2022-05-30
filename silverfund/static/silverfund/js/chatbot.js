@@ -25,13 +25,15 @@ function mode(s){
 }
 
 function appendChat(user, bot){
-    console.log('Trying to append')
-    console.log(user, bot)
-    $('#botbox')(`<div class="dialogbox user">${user}</div>
-                         <div class="dialogbox bot">${bot}</div>`);
-
-    const $element = document.getElementById('botbox');
-    $element.scrollTop = $element.scrollHeight;
+    console.log('Trying to append');
+    console.log(user, bot);
+    user_text = '<div class="dialogbox user">' + user + '</div>';
+    document.getElementById('botbox').innerHTML += user_text;
+    bot_text = '<div class="dialogbox bot">' + bot + '</div>';
+    document.getElementById('botbox').innerHTML += bot_text;
+    
+    var boxdiv = document.getElementById('botbox');
+    boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
 }
 
 document.getElementById('chatForm').addEventListener('submit', function(e){
@@ -40,30 +42,48 @@ document.getElementById('chatForm').addEventListener('submit', function(e){
         user_input = userInputTag.value;
         if(user_input == '안녕'){
           bot_output = '만나서 반가워요.'
-        }else if(user_input == '잘가'){
+        }else if(user_input == '잘가' || user_input == '종료'){
           bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)'
         }else{
           bot_output = '죄송합니다. 잘 모르겠어요 :('
-        }
+        };
 
-        fetch('{% url "silverfund:chatbot" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({name: user_input}),
-        }).then(response => response.json()).then(some => appendChat(user_input, some))
+        appendChat(user_input, bot_output);
         userInputTag.value = "";
+
+        // fetch('{% url "silverfund:chatbot" %}', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({name: user_input}),
+        // }).then(response => response.json()).then(some => appendChat(user_input, some))
+        // userInputTag.value = "";
     });
 
 function menu_selection(s){
       user_input = s;
       if(user_input == '관련 뉴스 검색'){
-        bot_output = '검색어를 입력해 주세요.'
+        bot_output = '검색어를 입력해 주세요.';
+        appendChat(user_input, bot_output);
+        news_search()
       }else if(user_input == '추가메뉴2'){
-        bot_output = '서비스 예정입니다.'
+        bot_output = '서비스 예정입니다.';
+        appendChat(user_input, bot_output);
       }else{
-        bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)'
-      }
-      appendChat(user_input, bot_output)
+        bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)';
+        appendChat(user_input, bot_output);
+      };
     }
+
+function news_search(){
+  document.getElementById('chatForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    userInputTag = document.getElementById('user_query');
+    user_input = userInputTag.value;
+    
+
+    appendChat(user_input, bot_output);
+    userInputTag.value = "";
+});
+}
