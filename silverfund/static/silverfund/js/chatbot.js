@@ -24,66 +24,94 @@ function mode(s){
     }
 }
 
-function appendChat(user, bot){
-    console.log('Trying to append');
-    console.log(user, bot);
-    user_text = '<div class="dialogbox user">' + user + '</div>';
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  // these HTTP methods do not require CSRF protection
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+  }
+});
+
+function sendQuestion(){
+    userInputTag = document.getElementById('user_query');
+    user_input = userInputTag.value;
+
+    // if(user_input == "종료"){
+    //     location.reload();
+    // };
+
+    user_text = '<div class="dialogbox user">' + user_input + '</div>';
     document.getElementById('botbox').innerHTML += user_text;
-    bot_text = '<div class="dialogbox bot">' + bot + '</div>';
-    document.getElementById('botbox').innerHTML += bot_text;
     
+    let question = {
+        "text": user_input,
+        "user": true,
+        "chatbot": false,
+    };
+
+    data = JSON.stringify(question);
+    sendAnswer(data);
+
+    $.ajax({
+        url: "send/",
+        type: 'POST',
+        data: JSON.stringify(question),
+        dataType: "json",
+        success: function(data){sendAnswer(data);},
+        error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
+    });
+
+    userInputTag.value = "";
+
     var boxdiv = document.getElementById('botbox');
     boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
 }
 
-document.getElementById('chatForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        userInputTag = document.getElementById('user_query');
-        user_input = userInputTag.value;
-        if(user_input == '안녕'){
-          bot_output = '만나서 반가워요.'
-        }else if(user_input == '잘가' || user_input == '종료'){
-          bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)'
-        }else{
-          bot_output = '죄송합니다. 잘 모르겠어요 :('
-        };
-
-        appendChat(user_input, bot_output);
-        userInputTag.value = "";
-
-        // fetch('{% url "silverfund:chatbot" %}', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({name: user_input}),
-        // }).then(response => response.json()).then(some => appendChat(user_input, some))
-        // userInputTag.value = "";
+function sendAnswer(data){
+    $.ajax({
+      url: "back/",
+      type: 'GET',
+      data: data,
+      dataType: "json",
+      success: function(data){
+        console.log(data['text']);
+      },
+      error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.')}
     });
+
+    var boxdiv = document.getElementById('botbox');
+    boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
+}
 
 function menu_selection(s){
       user_input = s;
       if(user_input == '관련 뉴스 검색'){
         bot_output = '검색어를 입력해 주세요.';
-        appendChat(user_input, bot_output);
-        news_search()
       }else if(user_input == '추가메뉴2'){
         bot_output = '서비스 예정입니다.';
-        appendChat(user_input, bot_output);
       }else{
         bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)';
-        appendChat(user_input, bot_output);
       };
+      // appendChat(user_input, bot_output);
     }
 
-function news_search(){
-  document.getElementById('chatForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    userInputTag = document.getElementById('user_query');
-    user_input = userInputTag.value;
-    
-
-    appendChat(user_input, bot_output);
-    userInputTag.value = "";
-});
-}
