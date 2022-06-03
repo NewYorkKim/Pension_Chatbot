@@ -29,11 +29,9 @@
     </nav>
     <div class="container">
         <div id="botbox">
-          <div class="defaultbox">
-            <br>
+          <div id="defaultbox" class="defaultbox">
             <div class="dialogbox bot">안녕하세요. 실버펀드 챗봇 서비스에 오신 것을 환영합니다.</div>
             <div class="dialogbox bot">연금에 대해 궁금하신 점이 있으시다면 아래에 입력해주세요. 제가 열심히 답변해 드리겠습니다 :-)</div>
-            <br><br><br><br><br>
             <div id="menu">
               <button class="btn btn-primary ml-1" onclick="menu_selection('관련 뉴스 검색');">관련 뉴스 검색</button>
               <button class="btn btn-primary" onclick="menu_selection('추가메뉴2');">추가메뉴2</button>
@@ -45,7 +43,7 @@
           <form action="{% url 'silverfund:chatbot' %}" id="chatForm" method="POST" onsubmit="return false;">
             {% csrf_token %}
             <input type="text" class="form-control" style="display: inline;" name="user_query" id="user_query" placeholder="질문을 입력해주세요.">
-            <input type="submit" class="btn btn-secondary mb-2" onclick="sendQuestion()" value="전송">
+            <input type="submit" id="submit" class="btn btn-secondary mb-2" onclick="sendQuestion('QA')" value="전송">
           </form>
         </div>
     </div>

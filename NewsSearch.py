@@ -41,81 +41,52 @@ class NewsSearcher:  # 질문에 대한 답변과 출처 기사 링크 제공 (3
     
     def input_question(self, query):
         pipe = self.build_QA_model()
-        # prediction = pipe.run(query=query,
-        #                       params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 3}})
         prediction = pipe.run(query=query,
-                              params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 1}})
+                              params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 5}})
         
         return prediction
     
     def get_answer(self, query):
         prediction = self.input_question(query)
-        # links = []
-        # outputs = []
+        links = []
+        top3 = []
         
-        # for i in range(3):
-        #     output = {}
-        #     answer = prediction['answers'][i].answer
-        #     context = prediction['answers'][i].context
-        #     title = prediction['answers'][i].meta['title']
-        #     link = prediction['answers'][i].meta['link']
+        for i in range(5):
+            output = {}
+            answer = prediction['answers'][i].answer
+            context = prediction['answers'][i].context
+            title = prediction['answers'][i].meta['title']
+            link = prediction['answers'][i].meta['link']
             
-        #     if link in links:
-        #         continue
-            
-        #     print(f'\n=====추천 뉴스=====')
-            
-        #     start = prediction['answers'][i].offsets_in_context[0].start - 200
-        #     if start < 0:
-        #         start = 0
-        #     end = prediction['answers'][i].offsets_in_context[0].start + 200
+            if link in links:
+                continue
+                        
+            start = prediction['answers'][i].offsets_in_context[0].start - 200
+            if start < 0:
+                start = 0
+            end = prediction['answers'][i].offsets_in_context[0].start + 200
 
-        #     cut = context[start:end]
+            cut = context[start:end]
         
-        #     text = ''
-        #     for line in context.split('. '):
-        #         if line in cut and answer in line:
-        #             text += line+'. '
+            output = ''
+            text = ''
+            for line in context.split('. '):
+                if line in cut and answer in line:
+                    text += line+'. '
                     
-        #     if len(text) == 0:
-        #         output['answer'] = answer + '...[더보기]'
-        #     else:
-        #         output['answer'] = text[:50] + '...[더보기]'
+            if len(text) == 0:
+                output += answer + '...[더보기]<br><br>'
+            else:
+                output += text[:50] + '...[더보기]<br><br>'
                 
-        #     output['title'] = title
-        #     output['link'] = link
-        #     outputs.append(output)
-        #     links.append(link)
+            output += f'<a href={link} target="_blank">{title}</a>'
+            top3.append(output)
+            links.append(link)
 
-        # return outputs
+            if len(top3) == 3:
+                break
 
-        output = {}
-        answer = prediction['answers'][0].answer
-        context = prediction['answers'][0].context
-        title = prediction['answers'][0].meta['title']
-        link = prediction['answers'][0].meta['link']
-
-        start = prediction['answers'][0].offsets_in_context[0].start - 200
-        if start < 0:
-            start = 0
-        end = prediction['answers'][0].offsets_in_context[0].start + 200
-        
-        cut = context[start:end]
-
-        text = ''
-        for line in context.split('. '):
-            if line in cut and answer in line:
-                text += line+'. '
-
-        if len(text) == 0:
-            output["answer"] = answer + '...[더보기]'
-        else:
-            output["answer"] = text[:50] + '...[더보기]'
-
-        output["title"] = title
-        output["link"] = link
-    
-        return output
+        return top3
         
 
 # ns = NewsSearcher()

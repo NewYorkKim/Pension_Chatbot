@@ -24,5 +24,5 @@ urlpatterns = [
     path('portfolio/', views.portfolio, name='portfolio'),
     path('chatbot/', views.chatbot, name='chatbot'),
     path('contacts/', views.contacts, name='contacts'),
-    path('chatbot/send/', views.send, name='send')
+    path('chatbot/news/', views.news, name='news')
 ]

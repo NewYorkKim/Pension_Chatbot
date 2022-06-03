@@ -24,13 +24,15 @@ def chatbot(request):
     # else:
     return render(request, 'silverfund/chatbot.html')
 
-def send(request):
+def news(request):
     question = json.loads(request.body)
     user_input = question.get('text')
 
-    bot_output = '입력: ' + user_input
+    bot_output = ns.get_answer(user_input)
 
-    context = {'text': bot_output}
+    context = {"text": bot_output,
+            "user": False,
+            "chatbot": True}
      
     return JsonResponse(context)
 

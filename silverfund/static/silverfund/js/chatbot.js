@@ -52,66 +52,118 @@ $.ajaxSetup({
   }
 });
 
-function sendQuestion(){
+function endChatbot(){
+    bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)';
+    bot_text = '<div class="dialogbox bot">' + bot_output + '</div>';
+    document.getElementById('botbox').innerHTML += bot_text;
+
+    displayScroll()
+    
+    setTimeout(function(){
+        location.reload();
+    }, 1500);
+}
+
+function displayScroll(){
+  var boxdiv = document.getElementById('botbox');
+  boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
+}
+
+function sendQuestion(s){
     userInputTag = document.getElementById('user_query');
     user_input = userInputTag.value;
 
-    // if(user_input == "종료"){
-    //     location.reload();
-    // };
-
     user_text = '<div class="dialogbox user">' + user_input + '</div>';
     document.getElementById('botbox').innerHTML += user_text;
-    
-    let question = {
-        "text": user_input,
-        "user": true,
-        "chatbot": false,
+
+    if(user_input == "종료"){
+      endChatbot();
     };
-
-    data = JSON.stringify(question);
-    sendAnswer(data);
-
-    $.ajax({
-        url: "send/",
-        type: 'POST',
-        data: JSON.stringify(question),
-        dataType: "json",
-        success: function(data){sendAnswer(data);},
-        error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
-    });
 
     userInputTag.value = "";
 
-    var boxdiv = document.getElementById('botbox');
-    boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
+    displayScroll()
+
+    if(s=='QA'){
+        questionAnswer(user_input);
+    }else if(s=='News'){
+        newsSearch(user_input);
+    };
 }
 
-function sendAnswer(data){
+function questionAnswer(user){
+    // POST
+    bot_output = user;
+
+    bot_text = '<div class="dialogbox bot">' + bot_output + '</div>';
+    document.getElementById('botbox').innerHTML += bot_text;
+
+    displayScroll()
+}
+
+function sendAnswer(){
+  // 답변 출력
+}
+
+function newsSearch(user){
+    let question = {
+        "text": user,
+        "user": true,
+        "chatbot": false,
+    };
     $.ajax({
-      url: "back/",
-      type: 'GET',
-      data: data,
-      dataType: "json",
-      success: function(data){
-        console.log(data['text']);
-      },
-      error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.')}
+        url: "news/",
+        type: 'POST',
+        data: JSON.stringify(question),
+        success: function(data){
+          console.log(data);
+          sendNews(data);},
+        error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
     });
+}
+
+function sendNews(data){
+    var news_output = data.text;
+
+    news_text = ''
+    for(var idx in news_output){
+        news_text +=  news_output[idx] + '<br><br>';
+    };
+
+    news_header = '검색 결과입니다: <br><br>';
+    document.getElementById('botbox').innerHTML += '<div class="dialogbox bot">' + news_header + news_text + '</div>';
 
     var boxdiv = document.getElementById('botbox');
     boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
+
+    defaultbox = document.getElementById('defaultbox');
+    document.getElementById('botbox').innerHTML += defaultbox.innerHTML;
+    
+    displayScroll()
+
+    document.getElementById("submit").setAttribute("onclick", "sendQuestion('QA')");
 }
 
 function menu_selection(s){
       user_input = s;
+      user_text = '<div class="dialogbox user">' + user_input + '</div>';
+      document.getElementById('botbox').innerHTML += user_text;
+
       if(user_input == '관련 뉴스 검색'){
         bot_output = '검색어를 입력해 주세요.';
+        bot_text = '<div class="dialogbox bot">' + bot_output + '</div>';
+        document.getElementById('botbox').innerHTML += bot_text;
+        document.getElementById("submit").setAttribute("onclick", "sendQuestion('News')");
+
+        displayScroll()
       }else if(user_input == '추가메뉴2'){
         bot_output = '서비스 예정입니다.';
+        bot_text = '<div class="dialogbox bot">' + bot_output + '</div>';
+        document.getElementById('botbox').innerHTML += bot_text;
+
+        displayScroll()
       }else{
-        bot_output = '함께 이야기할 수 있어서 즐거웠어요. 언제든 또 오세요 :-)';
+        endChatbot();
       };
-      // appendChat(user_input, bot_output);
     }
 

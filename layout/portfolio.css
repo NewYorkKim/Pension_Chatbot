@@ -44,3 +44,11 @@ footer{
   text-align: center;
   padding: 1em 0px;
 }
+
+.container {
+    border: 2px solid rgb(230, 224, 224);
+    height: 600px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
