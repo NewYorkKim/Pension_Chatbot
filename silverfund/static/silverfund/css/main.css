@@ -1,0 +1,112 @@
+body{
+    padding: 30px;
+}
+
+header{
+    padding: 5px;
+}
+
+header a{
+    font-size: xx-large;
+    text-decoration: none;
+    color: black;
+}
+
+.mode{
+  float: right;
+}
+
+nav{
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+nav ul{
+    list-style: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+nav ul li{
+    display: inline;
+    margin: 2.5em;
+}
+
+nav ul li a{
+    text-decoration: none;
+    line-height: 3em;
+    color: black;
+}
+
+footer{
+  clear: both;
+  text-align: center;
+  padding: 1em 0px;
+}
+
+.container {
+    border: 2px solid rgb(230, 224, 224);
+    height: 600px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#main{
+  font-size: 20px;
+  margin-top: 200px;
+}
+
+#qna{
+    display: none;
+}
+
+#result{
+    display: none;
+    margin-top: 10px;
+}
+
+.questionBox{
+    text-align: center;
+    font-size: 20px;
+    margin: 100px 0 20px 0;
+
+}
+
+.answerList{
+    background-color: whitesmoke;
+    border-radius: 20px;
+    display: block;
+    width: 80%;
+    border:0px;
+    font-size: 20px;
+}
+
+.status{
+    height: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #949292;
+}
+
+.statusBar{
+    height: 100%;
+
+    background: #a7d1fa;
+    background: -moz-linear-gradient(top, #a7d1fa 0%, #7dbcfa 45%, #4b85bf 100%);
+    background: -webkit-linear-gradient(top, #a7d1fa 0%, #7dbcfa 45%, #4b85bf 100%);
+    background: linear-gradient(to bottom, #a7d1fa 0%, #7dbcfa 45%, #4b85bf 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7d1fa', endColorstr='#4b85bf',GradientType=0 );
+
+    border-radius: 10px;
+}
+
+#label{
+    text-align: left;
+    line-height: 18px;
+    margin-left: 10px;
+    color: white;
+}

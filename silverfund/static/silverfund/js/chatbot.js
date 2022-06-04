@@ -92,17 +92,33 @@ function sendQuestion(s){
 }
 
 function questionAnswer(user){
-    // POST
-    bot_output = user;
-
-    bot_text = '<div class="dialogbox bot">' + bot_output + '</div>';
-    document.getElementById('botbox').innerHTML += bot_text;
-
-    displayScroll()
+    let question = {
+        "text": user,
+        "user": true,
+        "chatbot": false,
+    };
+    $.ajax({
+        url: "qna/",
+        type: 'POST',
+        data: JSON.stringify(question),
+        success: function(data){
+          console.log(data);
+          sendAnswer(data);},
+        error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
+    });
 }
 
-function sendAnswer(){
-  // 답변 출력
+function sendAnswer(data){
+    var qna_output = data.text;
+
+    qna_text = qna_output
+
+    document.getElementById('botbox').innerHTML += '<div class="dialogbox bot">' + qna_text + '</div>';
+
+    var boxdiv = document.getElementById('botbox');
+    boxdiv.scrollTop = document.getElementById('botbox').scrollHeight;
+  
+    displayScroll()
 }
 
 function newsSearch(user){

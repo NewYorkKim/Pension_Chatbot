@@ -1,4 +1,3 @@
-<!-- source="https://github.com/KunalDuran/Python-projects-/tree/master/chatbot_with_layout" -->
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
     </header>
     <nav>
       <ul>
-        <li><a href="">홈</a></li>
+        <li><a href="{% url 'silverfund:home' %}">홈</a></li>
         <li><a href="{% url 'silverfund:portfolio' %}">포트폴리오</a></li>
         <li><a href="{% url 'silverfund:chatbot' %}">챗봇</a></li>
         <li><a href="{% url 'silverfund:contacts' %}">연락</a></li>
@@ -33,9 +32,9 @@
             <div class="dialogbox bot">안녕하세요. 실버펀드 챗봇 서비스에 오신 것을 환영합니다.</div>
             <div class="dialogbox bot">연금에 대해 궁금하신 점이 있으시다면 아래에 입력해주세요. 제가 열심히 답변해 드리겠습니다 :-)</div>
             <div id="menu">
-              <button class="btn btn-primary ml-1" onclick="menu_selection('관련 뉴스 검색');">관련 뉴스 검색</button>
-              <button class="btn btn-primary" onclick="menu_selection('추가메뉴2');">추가메뉴2</button>
-              <button class="btn btn-secondary" onclick="menu_selection('종료');">종료</button>
+              <button class="btn btn-outline-primary ml-1" onclick="menu_selection('관련 뉴스 검색');">관련 뉴스 검색</button>
+              <button class="btn btn-outline-primary" onclick="menu_selection('추가메뉴2');">추가메뉴2</button>
+              <button class="btn btn-outline-dark" onclick="menu_selection('종료');">종료</button>
             </div>
           </div>
         </div>
