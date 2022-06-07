@@ -94,7 +94,7 @@ footer{
 .container {
     border: 2px solid rgb(230, 224, 224);
     height: 600px;
-    width: 400px;
+    width: 600px;
     display: flex;
     flex-direction: column;
 }

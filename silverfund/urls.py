@@ -24,6 +24,7 @@ urlpatterns = [
     path('portfolio/', views.portfolio, name='portfolio'),
     path('chatbot/', views.chatbot, name='chatbot'),
     path('contacts/', views.contacts, name='contacts'),
+    path('portfolio/ranks/', views.ranks, name="ranks"),
     path('chatbot/qna/', views.qna, name='qna'),
     path('chatbot/news/', views.news, name='news')
 ]

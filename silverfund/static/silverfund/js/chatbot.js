@@ -133,7 +133,8 @@ function newsSearch(user){
         data: JSON.stringify(question),
         success: function(data){
           console.log(data);
-          sendNews(data);},
+          sendNews(data);
+        },
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
     });
 }

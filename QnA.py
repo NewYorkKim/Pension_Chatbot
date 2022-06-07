@@ -37,7 +37,10 @@ class Chatbot:
                                   use_cache=True
                                 )
         generated = self.tokenizer.decode(gen_ids[0,:].tolist())
-        return generated
+        end = generated.rfind('.')
+        answer = generated[:end+1]
+
+        return answer
 
 # ch = Chatbot()
 # print(ch.get_answer('개인연금은 중도인출이 가능한가요?'))

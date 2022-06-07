@@ -8,26 +8,8 @@ import warnings
 warnings.filterwarnings(action='ignore')
 
 class NewsSearcher:  # 질문에 대한 답변과 출처 기사 링크 제공 (3개)
-    # def __init__(self):
-    #     df = pd.read_csv('./data/naver_news_all2.csv')
-    #     document_store = ElasticsearchDocumentStore(host='localhost', username='root', password='1111', index='test')
-    #     document_store.delete_documents()
-        
-    #     news_list = []
-    #     for i in range(len(df)):
-    #         data = df.iloc[i]
-    #         temp = {}
-    #         article = data['article'].strip()
-    #         temp['content'] = article
-    #         temp['meta'] = {'title': data['title'], 'subject': data['subject'], 'link': data['link']}
-    #         news_list.append(temp)
-            
-    #     document_store.write_documents(news_list)
-    #     print('MongoDB - ElasticSearch 연동이 완료되었습니다.')  
-
     def build_QA_model(self):
         document_store = ElasticsearchDocumentStore(host='localhost', username='root', password='1111', index='document')
-        # document_store = ElasticsearchDocumentStore(host='localhost', username='root', password='1111', index='test')
         retriever = BM25Retriever(document_store=document_store)
         reader = TransformersReader(model_name_or_path='monologg/koelectra-small-v2-distilled-korquad-384', 
                                     tokenizer='monologg/koelectra-small-v2-discriminator', 

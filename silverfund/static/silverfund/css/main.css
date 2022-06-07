@@ -47,17 +47,16 @@ footer{
 
 .container {
     border: 2px solid rgb(230, 224, 224);
-    height: 600px;
-    width: 400px;
     display: flex;
+    width: 100%;
     flex-direction: column;
     text-align: center;
-    padding: 10px 0;
+    padding: 0 0 150px 0;
 }
 
 #main{
   font-size: 20px;
-  margin-top: 200px;
+  margin-top: 150px;
 }
 
 #qna{
@@ -73,7 +72,6 @@ footer{
     text-align: center;
     font-size: 20px;
     margin: 100px 0 20px 0;
-
 }
 
 .answerList{
@@ -90,6 +88,7 @@ footer{
     width: 100%;
     border-radius: 10px;
     background-color: #949292;
+    margin-top: 10px;
 }
 
 .statusBar{
@@ -109,4 +108,8 @@ footer{
     line-height: 18px;
     margin-left: 10px;
     color: white;
+}
+
+td {
+    min-width: 90px;
 }
