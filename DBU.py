@@ -98,6 +98,8 @@ class DBUpdater:
         print('Delete: END')
         
     def unpdate_document_store(self):
+        self.update_news()
+        
         mongo_data = self.client['pension']['news'].find()
         df = pd.DataFrame(mongo_data)
 

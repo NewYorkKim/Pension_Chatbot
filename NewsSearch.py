@@ -1,11 +1,8 @@
-import pandas as pd
+
 from haystack.document_stores import ElasticsearchDocumentStore
 from haystack.nodes import BM25Retriever
 from haystack.nodes import TransformersReader
 from haystack.pipelines import ExtractiveQAPipeline
-import warnings
-
-warnings.filterwarnings(action='ignore')
 
 class NewsSearcher:  # 질문에 대한 답변과 출처 기사 링크 제공 (3개)
     def build_QA_model(self):

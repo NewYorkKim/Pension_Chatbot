@@ -25,6 +25,8 @@ urlpatterns = [
     path('chatbot/', views.chatbot, name='chatbot'),
     path('contacts/', views.contacts, name='contacts'),
     path('portfolio/ranks/', views.ranks, name="ranks"),
+    path('portfolio/result1/', views.show_result1, name='result1'),
+    path('portfolio/result2/', views.show_result2, name='result2'),
     path('chatbot/qna/', views.qna, name='qna'),
     path('chatbot/news/', views.news, name='news')
 ]

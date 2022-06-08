@@ -37,7 +37,7 @@ function goSurvey() {
     main.style.display = "none";
     qna.style.display = "block";
     let qIdx = 0;
-    goNext(qIdx)
+    goNext(qIdx);
 }
 
 function goNext(qIdx) {
@@ -86,10 +86,40 @@ function goResult() {
     qna.style.display = 'none';
     result.style.display = 'block';
 
+    setResult();
+}
+
+function setResult() {
+    if(totalScore <= 20){
+        level = levelList[0].name;
+        desc = levelList[0].desc;
+        file1 = levelList[0].file[0];
+        file2 = levelList[0].file[1];
+    }else if(totalScore <= 40){
+        level = levelList[1].name;
+        desc = levelList[1].desc;
+        file1 = levelList[1].file[0];
+        file2 = levelList[1].file[1];
+    }else if(totalScore <= 60){
+        level = levelList[2].name;
+        desc = levelList[2].desc;
+        file1 = levelList[2].file[0];
+        file2 = levelList[2].file[1];
+    }else if(totalScore <= 80){
+        level = levelList[3].name;
+        desc = levelList[3].desc;
+        file1 = levelList[3].file[0];
+        file2 = levelList[3].file[1];
+    }else{
+        level = levelList[4].name;
+        desc = levelList[4].desc;
+        file1 = levelList[4].file[0];
+        file2 = levelList[4].file[1];
+    };
     let survey_data = {
         "score": totalScore,
-        "result1": "",
-        "result2": ""
+        "result1": file1,
+        "result2": file2
     };
     $.ajax({
         url: "ranks/",
@@ -97,35 +127,30 @@ function goResult() {
         data: JSON.stringify(survey_data),
         success: function(data){
             console.log(data);
-            setResult(data);
         },
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
     });
+
+    document.getElementById("desc").innerHTML += '<div class="intro">당신의 투자 성향은 ' +  level + '입니다.</div><br>'
+                                                  + desc + '<br>추천 포트폴리오는 아래와 같습니다.';                  
+    
+    result.innerHTML += "<input type=button id='result1-btn' class='btn btn-secondary' value='퇴직연금' onclick='showResult1()'><br><br>";
+    result.innerHTML += "<input type=button id='result2-btn' class='btn btn-secondary' value='연금저축' onclick='showResult2()'>";
+
+    // const result1 = data.result1;
+    // const result2 = data.result2;
+
+    // r1 = document.getElementById("result1");
+    // r2 = document.getElementById("result2");
+
+    // r1.innerHTML += result1;
+    // r2.innerHTML += result2;
 }
 
-function setResult(data) {
-    if(totalScore <= 20){
-        level = '안정형';
-    }else if(totalScore <= 40){
-        level = '안정추구형';
-    }else if(totalScore <= 60){
-        level = '위험중립형';
-    }else if(totalScore <= 80){
-        level = '적극투자형';
-    }else{
-        level = '공격투자형';
-    };
+function showResult1() {
+    window.open("result1/", "퇴직연금", "width=400, height=300, left=100, top=50");
+}
 
-    document.getElementById("desc").innerHTML += '<div class="intro">당신의 투자 성향은 ' +  level + '입니다.</div>\
-                                                  <br>추천 포트폴리오는 아래와 같습니다.';                  
-    
-    var result1 = data.result1;
-    var result2 = data.result2;
-
-    r1 = document.getElementById("result1");
-    r2 = document.getElementById("result2")
-
-    document.getElementById("result1").innerHTML += result1;
-    document.getElementById("result2").innerHTML += result2;
-
+function showResult2() {
+    window.open("result2/", "연금저축", "width=400, height=300, left=100, top=50");
 }
