@@ -12,6 +12,7 @@ function getCookie(name) {
     }
     return cookieValue;
   }
+
   const csrftoken = getCookie('csrftoken');
   
   function csrfSafeMethod(method) {
@@ -26,9 +27,9 @@ function getCookie(name) {
     }
   });
 
-const main = document.querySelector("#main");
-const qna = document.querySelector("#qna");
-const result = document.querySelector("#result");
+let main = document.querySelector("#main");
+let qna = document.querySelector("#qna");
+let result = document.querySelector("#result");
 
 const endPoint = 7;
 let totalScore = 0;
@@ -50,10 +51,10 @@ function goNext(qIdx) {
             addAnswer(qnaList[qIdx].a[i].answer, qIdx, i);
         }
         var status = document.querySelector('.statusBar');
-        status.style.width = (100 / endPoint) * (qIdx) + '%';
+        status.style.width = (100 / endPoint) * (qIdx+1) + '%';
     
-        document.getElementById("label").innerHTML = qIdx + '/' +  endPoint;
-    }
+        document.getElementById("label").innerHTML = (qIdx+1) + '/' +  endPoint;
+    };
 }
 
 function addAnswer(answerText, qIdx, idx) {
@@ -63,7 +64,6 @@ function addAnswer(answerText, qIdx, idx) {
     answer.classList.add('btn');
     answer.classList.add('btn-light');
     answer.classList.add('btn-block');
-    // answer.classList.add('mx-auto');
     answer.setAttribute('value', qnaList[qIdx].a[idx].score);
 
     a.appendChild(answer)
@@ -86,40 +86,10 @@ function goResult() {
     qna.style.display = 'none';
     result.style.display = 'block';
 
-    setResult();
-}
-
-function setResult() {
-    if(totalScore <= 20){
-        level = levelList[0].name;
-        desc = levelList[0].desc;
-        file1 = levelList[0].file[0];
-        file2 = levelList[0].file[1];
-    }else if(totalScore <= 40){
-        level = levelList[1].name;
-        desc = levelList[1].desc;
-        file1 = levelList[1].file[0];
-        file2 = levelList[1].file[1];
-    }else if(totalScore <= 60){
-        level = levelList[2].name;
-        desc = levelList[2].desc;
-        file1 = levelList[2].file[0];
-        file2 = levelList[2].file[1];
-    }else if(totalScore <= 80){
-        level = levelList[3].name;
-        desc = levelList[3].desc;
-        file1 = levelList[3].file[0];
-        file2 = levelList[3].file[1];
-    }else{
-        level = levelList[4].name;
-        desc = levelList[4].desc;
-        file1 = levelList[4].file[0];
-        file2 = levelList[4].file[1];
-    };
     let survey_data = {
         "score": totalScore,
-        "result1": file1,
-        "result2": file2
+        "result1": "",
+        "result2": ""
     };
     $.ajax({
         url: "ranks/",
@@ -127,30 +97,66 @@ function setResult() {
         data: JSON.stringify(survey_data),
         success: function(data){
             console.log(data);
+            setResult(data);
         },
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
     });
+}
 
-    document.getElementById("desc").innerHTML += '<div class="intro">당신의 투자 성향은 ' +  level + '입니다.</div><br>'
-                                                  + desc + '<br>추천 포트폴리오는 아래와 같습니다.';                  
-    
-    result.innerHTML += "<input type=button id='result1-btn' class='btn btn-secondary' value='퇴직연금' onclick='showResult1()'><br><br>";
-    result.innerHTML += "<input type=button id='result2-btn' class='btn btn-secondary' value='연금저축' onclick='showResult2()'>";
+function setResult(data) {
+    if(totalScore <= 20){
+        level = levelList[0].name;
+        desc = levelList[0].desc;
+    }else if(totalScore <= 40){
+        level = levelList[1].name;
+        desc = levelList[1].desc;
+    }else if(totalScore <= 60){
+        level = levelList[2].name;
+        desc = levelList[2].desc;
+    }else if(totalScore <= 80){
+        level = levelList[3].name;
+        desc = levelList[3].desc;
+    }else{
+        level = levelList[4].name;
+        desc = levelList[4].desc;
+    };
 
-    // const result1 = data.result1;
-    // const result2 = data.result2;
+    document.getElementById("desc").innerHTML += '<div class="intro">' +  level + '</div><br>'
+                                                  + desc + '<br>추천 포트폴리오를 확인해 보세요.';                  
 
-    // r1 = document.getElementById("result1");
-    // r2 = document.getElementById("result2");
+    result.innerHTML += '<div id="selection" class="row"><div class="col-sm-6"><div class="card"><div class="card-body"><h5 class="card-title">퇴직연금</h5>\
+        <p class="card-text">세액공제 한도: 연 400만 원</p>\
+        <input type=button id="result2-btn" class="btn btn-secondary btn-lg" value="확인" onclick=showResult2()></a></div></div></div>\
+        <div class="col-sm-6"><div class="card"><div class="card-body"><h5 class="card-title">연금저축</h5>\
+        <p class="card-text">세액공제 한도: 연 700만 원</p>\
+        <input type=button id="result2-btn" class="btn btn-secondary btn-lg" value="확인" onclick=showResult2()></a></div></div></div></div>';
 
-    // r1.innerHTML += result1;
-    // r2.innerHTML += result2;
+    result1 = data.result1;
+    result2 = data.result2;
+
+    r1 = document.getElementById("result1_body");
+    r2 = document.getElementById("result2_body");
+
+    r1.innerHTML += result1;
+    r2.innerHTML += result2;
+
+    r1.innerHTML += '<br><button type="button" class="btn btn-secondary" value="닫기" onclick="shutDown1()">닫기</button>';
+    r2.innerHTML += '<br><button type="button" class="btn btn-secondary" value="닫기" onclick="shutDown2()">닫기</button>';
 }
 
 function showResult1() {
-    window.open("result1/", "퇴직연금", "width=400, height=300, left=100, top=50");
+    document.getElementById("result1").style.display = 'block';
 }
 
 function showResult2() {
-    window.open("result2/", "연금저축", "width=400, height=300, left=100, top=50");
+    document.getElementById("result2").style.display = 'block';
+
+}
+
+function shutDown1() {
+    document.getElementById("result1").style.display = 'none';
+}
+
+function shutDown2() {
+    document.getElementById("result2").style.display = 'none';
 }

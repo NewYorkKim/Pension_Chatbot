@@ -133,6 +133,7 @@ function newsSearch(user){
         data: JSON.stringify(question),
         success: function(data){
           console.log(data);
+          loading();
           sendNews(data);
         },
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
@@ -183,4 +184,14 @@ function menu_selection(s){
         endChatbot();
       };
     }
+
+function loading(){
+      loading_bubble = '<div id="loader">\
+        <div class="bubble"></div>\
+        <div class="bubble"></div>\
+        <div class="bubble"></div>\
+      </div></div>';
+
+      document.getElementById('botbox').innerHTML += loading_bubble;
+}
 

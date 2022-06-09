@@ -131,25 +131,4 @@ class DBUpdater:
                 config = {'pages_to_fetch': pages_to_fetch}
                 json.dump(config, out_file)
                 
-        # self.unpdate_document_store(pages_to_fetch)
-
         schedule.every().day.at("03:00").do(self.unpdate_document_store(pages_to_fetch))
-        
-        # today = datetime.now()
-        # lastday = calendar.monthrange(today.year, today.month)[1]
-        
-        # if today.month == 12 and today.day == lastday:
-        #     nextday = today.replace(year=today.year+1, month=1, day=1, hour=3, minute=0, second=0)
-        # elif today.day == lastday:
-        #     nextday = today.replace(month=today.month+1, day=1, hour=3, minute=0, second=0)
-        # else:
-        #     nextday = today.replace(day=today.day+1, hour=3, minute=0, second=0)
-            
-        # diff = nextday - today
-        # secs = diff.seconds
-        
-        # t = Timer(secs, self.execute_daily)
-        
-        # print(f"\n다음 업데이트 예정 시간: ({nextday.strftime('%Y-%m-%d %H:%M')})\n")
-        
-        # t.start()    

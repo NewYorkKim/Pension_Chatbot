@@ -1,70 +1,57 @@
-body{
-    padding: 30px;
-}
-
-header{
-    padding: 5px;
-}
-
-header a{
-    font-size: xx-large;
-    text-decoration: none;
-    color: black;
-}
-
-.mode{
-  float: right;
-}
-
-nav{
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
-
-nav ul{
-    list-style: none;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+.container {
+    border: 2px solid rgb(230, 224, 224);
+    border-radius: 8px;
+    /* background-color: whitesmoke; */
+    display: flex;
+    width: 100%;
+    height: 600px;
+    flex-direction: column;
+    font-family: 'Nanum Gothic', sans-serif;
     text-align: center;
+    display: flex;
+    margin-top: 30px;
+    padding: 0;
 }
 
-nav ul li{
-    display: inline;
-    margin: 2.5em;
-}
-
-nav ul li a{
-    text-decoration: none;
-    line-height: 3em;
-    color: black;
-}
-
-footer{
-  clear: both;
-  text-align: center;
-  padding: 1em 0px;
+#headerbox {
+    background: linear-gradient(to right, skyBlue, Violet, LightCoral);
+    color: white;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    width: 100%;
+    height: 50px;
+    padding-top: 10px;
 }
 
 .dialogbox{
     color: #fff;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: large;
+    font-family: 'Nanum Gothic', sans-serif;
     width: auto;
-    margin: 5px;
-    padding: 10px;
+    margin: 10px 10px 0 10px;
+    padding: 15px;
     /* text-align: center; */
 }
 
 .user {
     float: right;
     clear: both;
-    background-color: #99ccff;
+    text-align: left;
+    /* background-color: violet; */
+    background: linear-gradient(to left, LightCoral, Violet);
 }
 
 .bot {
     float: left;
     clear: both;
-    background-color: #949292;
+    text-align: left;
+    color: black;
+    background-color: whitesmoke;
 }
 
 .news {
@@ -94,11 +81,45 @@ footer{
 .container {
     border: 2px solid rgb(230, 224, 224);
     height: 600px;
-    width: 600px;
+    /* width: 600px; */
     display: flex;
     flex-direction: column;
 }
 
 #menu {
     clear: both;
+    float: left;
 }
+  
+.bubble {
+    animation: expand .75s ease-in-out infinite;
+    border-radius: 20px;
+    display: inline-block;
+    transform-origin: center center;
+    margin: 0 3px;
+    width: 10px;
+    height: 10px;
+  }
+  
+.bubble:nth-child(1) {
+    background: #949292;
+  }
+  
+.bubble:nth-child(2) {
+    animation-delay: 180ms;
+    background: #949292;
+  }
+  
+.bubble:nth-child(3) {
+    animation-delay: 360ms;
+    background: #949292;
+  }
+  
+ @keyframes expand {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.55);
+    }
+  }
