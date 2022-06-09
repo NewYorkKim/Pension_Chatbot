@@ -86,8 +86,10 @@ function sendQuestion(s){
 
     if(s=='QA'){
         questionAnswer(user_input);
+        loadingOn();
     }else if(s=='News'){
         newsSearch(user_input);
+        loadingOn();
     };
 }
 
@@ -103,6 +105,7 @@ function questionAnswer(user){
         data: JSON.stringify(question),
         success: function(data){
           console.log(data);
+          loadingOff();
           sendAnswer(data);},
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
     });
@@ -133,7 +136,7 @@ function newsSearch(user){
         data: JSON.stringify(question),
         success: function(data){
           console.log(data);
-          loading();
+          loadingOff();
           sendNews(data);
         },
         error: function(){alert('오류가 발생하였습니다. 새로고침 후 다시 이용해 주세요.');}
@@ -145,7 +148,7 @@ function sendNews(data){
 
     news_text = ''
     for(var idx in news_output){
-        news_text +=  news_output[idx] + '<br><br>';
+        news_text += news_output[idx] + '<br><br>';
     };
 
     news_header = '검색 결과입니다: <br><br>';
@@ -185,13 +188,17 @@ function menu_selection(s){
       };
     }
 
-function loading(){
+function loadingOn(){
       loading_bubble = '<div id="loader">\
         <div class="bubble"></div>\
         <div class="bubble"></div>\
         <div class="bubble"></div>\
-      </div></div>';
+      </div>';
 
-      document.getElementById('botbox').innerHTML += loading_bubble;
+      document.getElementById('botbox').innerHTML += '<div class="dialogbox bot" id="loading_bubble">' + loading_bubble + '</div>';
+}
+
+function loadingOff(){
+  document.getElementById("loading_bubble").style.display = 'none';
 }
 

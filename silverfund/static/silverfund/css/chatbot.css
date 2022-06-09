@@ -14,7 +14,7 @@
 }
 
 #headerbox {
-    background: linear-gradient(to right, skyBlue, Violet, LightCoral);
+    background: linear-gradient(to right, skyBlue, MediumOrchid);
     color: white;
     font-family: 'Nanum Gothic', sans-serif;
     font-size: 20px;
@@ -42,8 +42,8 @@
     float: right;
     clear: both;
     text-align: left;
-    /* background-color: violet; */
-    background: linear-gradient(to left, LightCoral, Violet);
+    background-color: rgb(205, 121, 225);
+    /* background: linear-gradient(to left, LightCoral, Violet); */
 }
 
 .bot {
@@ -65,7 +65,7 @@
 } */
 
 #user_query {
-    width: 90%;
+    width: 93%;
 }
 
 #botbox{
@@ -97,8 +97,8 @@
     display: inline-block;
     transform-origin: center center;
     margin: 0 3px;
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
   }
   
 .bubble:nth-child(1) {

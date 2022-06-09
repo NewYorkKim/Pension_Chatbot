@@ -54,9 +54,9 @@ class NewsSearcher:  # 질문에 대한 답변과 출처 기사 링크 제공 (3
                     text += line+'. '
                     
             if len(text) == 0:
-                output += answer + '...[더보기]<br><br>'
+                output += answer + '...[더보기]<br>'
             else:
-                output += text[:50] + '...[더보기]<br><br>'
+                output += text[:50] + '...[더보기]<br>'
                 
             output += f'<a href={link} target="_blank">{title}</a>'
             top3.append(output)
