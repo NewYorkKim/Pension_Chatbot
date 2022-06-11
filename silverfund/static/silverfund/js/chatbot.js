@@ -189,7 +189,7 @@ function menu_selection(s){
     }
 
 function loadingOn(){
-      loading_bubble = '<div id="loader">\
+      loading_bubble = '<div class="loader">\
         <div class="bubble"></div>\
         <div class="bubble"></div>\
         <div class="bubble"></div>\
@@ -199,6 +199,6 @@ function loadingOn(){
 }
 
 function loadingOff(){
-  document.getElementById("loading_bubble").style.display = 'none';
+  document.getElementsByClassName("loading_bubble").style.display = 'none';
 }
 

@@ -7,10 +7,12 @@ import json
 from FundRanks import FundRanker
 from NewsSearch import NewsSearcher
 from QnA import Chatbot
+# from QnA_Haystack import QAExtractor
 
+fr = FundRanker()
 ns = NewsSearcher()
 ch = Chatbot()
-fr = FundRanker()
+# ex = QAExtractor()
 
 def home(request):
     return render(request, 'silverfund/home.html')
@@ -39,7 +41,10 @@ def qna(request):
     question = json.loads(request.body)
     user_input = question.get('text')
 
+    # 답변 생성 모델
     bot_output = ch.get_answer(user_input)
+    # 답변 추출 모델
+    # bot_output = ex.get_answer(user_input)
 
     context = {"text": bot_output,
                "user": False,
